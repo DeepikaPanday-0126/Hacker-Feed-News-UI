@@ -1,6 +1,6 @@
 <div class="container">
     <h2>Items</h2>
-  
+    <div style="max-height: 310px; overflow-y: auto;">
     <!-- Table to display items -->
     <table mat-table [dataSource]="items" class="mat-elevation-z8 full-width">
       
@@ -138,10 +138,10 @@
         </td>
       </ng-container>
   
-      <tr mat-header-row *matHeaderRowDef="itemDisplayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="itemDisplayedColumns" sticky></tr>
       <tr mat-row *matRowDef="let row; columns: itemDisplayedColumns;"></tr>
     </table>
-  
+    </div>
     <br><br>
   
     <!-- Add New Item Row -->

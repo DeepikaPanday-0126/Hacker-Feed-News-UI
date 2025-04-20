@@ -14,10 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MatSelectModule } from '@angular/material/select';
-
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,MatFormFieldModule,MatSelectModule,MatCheckboxModule
+    MatInputModule,MatFormFieldModule,MatSelectModule,MatCheckboxModule,MatToolbarModule,MatListModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,

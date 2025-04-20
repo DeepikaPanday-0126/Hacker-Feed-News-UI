@@ -2,9 +2,7 @@
     margin: 20px;
   }
   
-  .full-width-table {
-    width: 100%;
-  }
+
   
   .full-field {
     width: 100%;
@@ -14,3 +12,28 @@
     margin-bottom: 12px;
   }
   
+  .items-container {
+    padding: 1rem;
+  }
+  
+  .table-wrapper {
+    max-height: 330px; /* Adjust as needed */
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  /* Optional: Style the scrollbar */
+  .table-wrapper::-webkit-scrollbar {
+    width: 8px;
+  }
+  .table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  
+.mat-header-row {
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure the header stays above other elements */
+}

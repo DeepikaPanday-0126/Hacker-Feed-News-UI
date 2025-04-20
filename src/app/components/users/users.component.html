@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Users</h2>
- 
+  <div style="max-height: 310px; overflow-y: auto;">
   <!-- Add New User Row -->
   <table mat-table [dataSource]="users" class="mat-elevation-z8 full-width">
 
@@ -55,9 +55,10 @@
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="userDisplayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="userDisplayedColumns" sticky></tr>
     <tr mat-row *matRowDef="let row; columns: userDisplayedColumns;"></tr>
   </table>
+  </div>
 <br><br>
   <div class="users-container">
     <!-- ADD Button -->

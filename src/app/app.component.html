@@ -1,10 +1,14 @@
+<!-- app.component.html -->
+<mat-toolbar color="primary" class="top-header">
+  <span class="header-title">📰 Hacker News Feed</span>
+</mat-toolbar>
+
 <div class="container">
   <div class="sidebar">
-    <h3>Menu</h3>
-    <ul>
-      <li><a routerLink="/users" routerLinkActive="active">Users</a></li>
-      <li><a routerLink="/items" routerLinkActive="active">Items</a></li>
-    </ul>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/users" routerLinkActive="active">Users</a>
+      <a mat-list-item routerLink="/items" routerLinkActive="active">Items</a>
+    </mat-nav-list>
   </div>
 
   <div class="content">
