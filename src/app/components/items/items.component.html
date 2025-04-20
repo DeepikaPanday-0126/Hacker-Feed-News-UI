@@ -1,1 +1,223 @@
-<p>items works!</p>
+<div class="container">
+    <h2>Items</h2>
+  
+    <!-- Table to display items -->
+    <table mat-table [dataSource]="items" class="mat-elevation-z8 full-width">
+      
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.id }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.id" disabled />
+        </td>
+      </ng-container>
+  
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.title }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.title" />
+        </td>
+      </ng-container>
+  
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.type }}</div>
+          <mat-form-field *ngIf="editRowId === item.id" class="custom-small">
+            <mat-select [(ngModel)]="editCache.type">
+              <mat-option *ngFor="let option of typeOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+      
+  
+      <!-- Text Column -->
+      <ng-container matColumnDef="text">
+        <th mat-header-cell *matHeaderCellDef>Text</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.text }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.text" />
+        </td>
+      </ng-container>
+  
+      <!-- Time Column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.time }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.time" />
+        </td>
+      </ng-container>
+  
+      <!-- Score Column -->
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef>Score</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.score }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.score" />
+        </td>
+      </ng-container>
+  
+      <!-- Poll Column -->
+      <ng-container matColumnDef="poll">
+        <th mat-header-cell *matHeaderCellDef>Poll</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.poll }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.poll" />
+        </td>
+      </ng-container>
+  
+      <!-- Kids Column -->
+      <ng-container matColumnDef="kids">
+        <th mat-header-cell *matHeaderCellDef>Kids</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.kids }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.kids" />
+        </td>
+      </ng-container>
+  
+      <!-- URL Column -->
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef>URL</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.url }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.url" />
+        </td>
+      </ng-container>
+  
+      <!-- Parent Column -->
+      <ng-container matColumnDef="parent">
+        <th mat-header-cell *matHeaderCellDef>Parent</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.parent }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.parent" />
+        </td>
+      </ng-container>
+  
+      <!-- Parts Column -->
+      <ng-container matColumnDef="parts">
+        <th mat-header-cell *matHeaderCellDef>Parts</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.parts }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.parts" />
+        </td>
+      </ng-container>
+  
+      <!-- Descendants Column -->
+      <ng-container matColumnDef="descendants">
+        <th mat-header-cell *matHeaderCellDef>Descendants</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">{{ item.descendants }}</div>
+          <input *ngIf="editRowId === item.id" [(ngModel)]="editCache.descendants" />
+        </td>
+      </ng-container>
+  
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let item">
+          <div *ngIf="editRowId !== item.id">
+            <button mat-icon-button color="accent" (click)="startEdit(item)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteItem(item.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="editRowId === item.id">
+            <button mat-icon-button color="primary" (click)="saveEdit()">
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-button (click)="cancelEdit()">Cancel</button>
+          </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="itemDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: itemDisplayedColumns;"></tr>
+    </table>
+  
+    <br><br>
+  
+    <!-- Add New Item Row -->
+    <div class="items-container">
+      <button mat-raised-button color="primary" (click)="showAddRow = true" *ngIf="!showAddRow">
+        <mat-icon>add</mat-icon> Add Item
+      </button>
+  
+      <div *ngIf="showAddRow" class="add-item-form">
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Title</mat-label>
+          <input matInput [(ngModel)]="newItem.title">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="custom-small">
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="newItem.type">
+              <mat-option *ngFor="let option of typeOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Text</mat-label>
+          <input matInput [(ngModel)]="newItem.text">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Time</mat-label>
+          <input matInput type="number" [(ngModel)]="newItem.time">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Score</mat-label>
+          <input matInput type="number" [(ngModel)]="newItem.score">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Poll</mat-label>
+          <input matInput type="number" [(ngModel)]="newItem.poll">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" class="custom-small">
+            <mat-label>Kids (comma-separated)</mat-label>
+            <input matInput [(ngModel)]="newItem.kidsString">
+          </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>URL</mat-label>
+          <input matInput [(ngModel)]="newItem.url">
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Parent</mat-label>
+          <input matInput [(ngModel)]="newItem.parent">
+        </mat-form-field>
+  
+       
+          
+          <!-- Parts -->
+          <mat-form-field appearance="fill" class="custom-small">
+            <mat-label>Parts (comma-separated)</mat-label>
+            <input matInput [(ngModel)]="newItem.partsString">
+          </mat-form-field>
+  
+        <mat-form-field appearance="fill" floatLabel="always" class="custom-small">
+          <mat-label>Descendants</mat-label>
+          <input matInput type="number" [(ngModel)]="newItem.descendants">
+        </mat-form-field>
+  
+        <button mat-icon-button color="primary" (click)="addItem()">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="cancelAdd()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  

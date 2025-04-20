@@ -1,0 +1,33 @@
+.users-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+ 
+  }
+  
+
+  
+  /* Ensure borders around mat-form-field */
+  .add-user-form .custom-field {
+    width: 100%;
+    border: 2px solid #ccc; /* Border around the form field */
+    border-radius: 4px;
+    margin-bottom: 8px;  /* Space between fields */
+    padding: 8px;
+  }
+  
+  /* Add custom styling to the input field inside mat-form-field */
+  .add-user-form .custom-field input {
+    border: none; /* Remove any inner border */
+  }
+  
+  /* Optional: Apply focus border color */
+  .add-user-form .custom-field.mat-focused {
+    border-color: #1976d2; /* Change border color on focus */
+  }
+  
+  /* Button styling */
+  button {
+    margin-top: 12px;
+  }
+  
