@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit,AfterViewInit {
   users: any[] = [];
   newUser = { id: '', karma: 0, about: '', created: Date.now(), submitted: [] };
   editRowId: string | null = null;
@@ -19,9 +22,22 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.getAllUsers();
   }
+  dataSource = new MatTableDataSource<any>([]);
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  
   getAllUsers() {
-    this.userService.getUsers().subscribe(data => this.users = data);
+    this.userService.getUsers().subscribe(data => {
+      this.users = data;
+      this.dataSource.data = this.users;
+    });
   }
 
   addUser() {

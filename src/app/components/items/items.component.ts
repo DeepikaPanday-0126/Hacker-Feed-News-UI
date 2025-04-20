@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Item } from 'src/app/models/items.model';
 import { ItemService } from 'src/app/services/item.service';
 
@@ -8,7 +11,7 @@ import { ItemService } from 'src/app/services/item.service';
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit,AfterViewInit {
 
   items: Item[] = [];
   newItem: any =  {
@@ -27,7 +30,6 @@ export class ItemsComponent implements OnInit {
     score: 0,
     title: '',
     descendants: 0,
-    // Temporary string inputs for the UI
     kidsString: '',
     partsString: ''
   };
@@ -45,10 +47,17 @@ export class ItemsComponent implements OnInit {
   ngOnInit(): void {
     this.getItems();
   }
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  dataSource = new MatTableDataSource<any>([]); 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   getItems(): void {
-    this.itemService.getItems().subscribe((data: Item[]) => {
+    this.itemService.getItems().subscribe(data => {
       this.items = data;
+      this.dataSource.data = this.items;
     });
   }
 
@@ -59,8 +68,6 @@ export class ItemsComponent implements OnInit {
     this.newItem.parts = this.newItem.partsString
       ? this.newItem.partsString.split(',').map((s: string) => parseInt(s.trim(), 10))
       : [];
-  
-    // Remove temporary fields
     delete this.newItem.kidsString;
     delete this.newItem.partsString;
   
@@ -122,10 +129,17 @@ export class ItemsComponent implements OnInit {
       score: 0,
       title: '',
       descendants: 0,
-      // Temporary string inputs for the UI
       kidsString: '',
       partsString: ''
     };
     
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

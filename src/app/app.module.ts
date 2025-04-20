@@ -18,6 +18,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort'; 
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MatListModule } from '@angular/material/list';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,MatFormFieldModule,MatSelectModule,MatCheckboxModule,MatToolbarModule,MatListModule
+    MatInputModule,MatFormFieldModule,MatSelectModule,MatCheckboxModule,MatToolbarModule,
+    MatListModule,MatPaginatorModule,MatSortModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
