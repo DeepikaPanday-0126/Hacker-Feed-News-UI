@@ -7,28 +7,23 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
+import { LoaderService } from '../services/loader.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
+  constructor(private loaderService: LoaderService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Clone request and add a fake auth token
-    const authReq = req.clone();
-
-    console.log('Request:', authReq);
-
-    return next.handle(authReq).pipe(
-      tap({
-        next: event => {
-          if (event instanceof HttpResponse) {
-            console.log('Response:', event);
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Error:', error);
-        }
-      })
+    this.loaderService.show();
+  
+    return next.handle(req).pipe(
+      catchError(error => {
+        console.error('HTTP Error:', error);
+        // Optionally show toast or alert here
+        return throwError(() => error);
+      }),
+      finalize(() => this.loaderService.hide())
     );
   }
 }

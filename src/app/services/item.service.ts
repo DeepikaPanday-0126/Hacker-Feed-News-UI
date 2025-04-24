@@ -6,27 +6,23 @@ import { environment } from '../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ItemService {
-  private apiUrl = environment.apiUrl+'Item';
+  private apiUrl = environment.apiUrl+'NewsFeed';
 
   constructor(private http: HttpClient) {}
 
-  getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.apiUrl);
+  
+  getLatestItem(): Observable<Item> {
+    return this.http.get<Item>(`${this.apiUrl}`);
   }
 
-  getItem(id: number): Observable<Item> {
+  getItemById(id: number): Observable<Item> {
     return this.http.get<Item>(`${this.apiUrl}/${id}`);
   }
-
-  createItem(item: Item): Observable<Item> {
-    return this.http.post<Item>(this.apiUrl, item);
+  getTopStories(): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiUrl}/top-stories`);
   }
-
-  updateItem(id: number, item: Item): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/${id}`, item);
+  getAskedStories(): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiUrl}/asked-stories`);
   }
-
-  deleteItem(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+  
 }

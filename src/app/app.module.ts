@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UsersComponent } from './components/users/users.component';
 import { ItemsComponent } from './components/items/items.component';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -20,11 +19,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent,
     ItemsComponent
   ],
   imports: [
@@ -37,7 +36,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonModule,
     MatIconModule,
     MatInputModule,MatFormFieldModule,MatSelectModule,MatCheckboxModule,MatToolbarModule,
-    MatListModule,MatPaginatorModule,MatSortModule
+    MatListModule,MatPaginatorModule,MatSortModule,MatProgressSpinnerModule
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,

@@ -1,17 +1,15 @@
-<!-- app.component.html -->
-<mat-toolbar color="primary" class="top-header">
-  <span class="header-title">📰 Hacker News Feed</span>
+<mat-toolbar color="primary" class="mat-header">
+  <span class="toolbar-title">📰 Hacker News Feed</span>
 </mat-toolbar>
+<div *ngIf="isLoading" class="overlay">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="60"
+    color="primary"
+  ></mat-progress-spinner>
+</div>
 
-<div class="container">
-  <div class="sidebar">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/users" routerLinkActive="active">Users</a>
-      <a mat-list-item routerLink="/items" routerLinkActive="active">Items</a>
-    </mat-nav-list>
-  </div>
 
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
+<div [class.blurred]="isLoading">
+  <router-outlet></router-outlet>
 </div>

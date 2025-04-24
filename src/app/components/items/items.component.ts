@@ -13,39 +13,21 @@ import { ItemService } from 'src/app/services/item.service';
 })
 export class ItemsComponent implements OnInit,AfterViewInit {
 
-  items: Item[] = [];
-  newItem: any =  {
-    id: 0,
-    deleted: false,
-    type: '',
-    by: '',
-    time: Date.now(),
-    text: '',
-    dead: false,
-    parent: '',
-    poll: 0,
-    kids: [],
-    parts: [],
-    url: '',
-    score: 0,
-    title: '',
-    descendants: 0,
-    kidsString: '',
-    partsString: ''
-  };
+  items!: Item[];
+  
   editRowId: number | null = null;
   editCache: any = {};
   showAddRow: boolean = false;
-
-  itemDisplayedColumns: string[] = ['id', 'title', 'type', 'text', 'time', 'score', 'poll', 'kids', 'url', 'parent', 'parts', 'descendants', 'actions'];
+  isLoading: boolean = false;
+  itemDisplayedColumns: string[] = [ 'title', 'type', 'text',  'score', 'poll', 'url'];
 
   typeOptions: string[] = ['job', 'story', 'comment', 'poll', 'pollopt'];
 
 
-  constructor(private itemService: ItemService) { this.resetNewItem()}
+  constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.getItems();
+    this.getTopStories();
   }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -54,86 +36,43 @@ export class ItemsComponent implements OnInit,AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  getItems(): void {
-    this.itemService.getItems().subscribe(data => {
-      this.items = data;
+  getItemById( id:number): void {
+    this.itemService.getItemById(id).subscribe(result => {
+      console.log(result);
+      this.items =[result];
       this.dataSource.data = this.items;
     });
   }
 
-  addItem() {
-    this.newItem.kids = this.newItem.kidsString
-      ? this.newItem.kidsString.split(',').map((s: string) => parseInt(s.trim(), 10))
-      : [];
-    this.newItem.parts = this.newItem.partsString
-      ? this.newItem.partsString.split(',').map((s: string) => parseInt(s.trim(), 10))
-      : [];
-    delete this.newItem.kidsString;
-    delete this.newItem.partsString;
-  
-    this.itemService.createItem(this.newItem).subscribe(res => {
-      this.getItems();
-      this.cancelAdd();
+  getLatestItem(): void {
+    this.itemService.getLatestItem().subscribe(result => {
+      console.log(result);
+      this.items =[result];
+      this.dataSource.data = this.items;
+    });
+  }
+  getTopStories(): void {
+    this.itemService.getTopStories().subscribe(result => {
+      console.log(result);
+      this.items =result;
+      this.dataSource.data = this.items;
+    });
+  }
+  getAskedStories(): void {
+    this.itemService.getAskedStories().subscribe(result => {
+      console.log(result);
+      this.items =result;
+      this.dataSource.data = this.items;
     });
   }
   
-  deleteItem(itemId: number): void {
-    this.itemService.deleteItem(itemId).subscribe(() => {
-      this.items = this.items.filter(item => item.id !== itemId);
-    });
-  }
+ 
 
   startEdit(item: Item): void {
     this.editRowId = item.id;
     this.editCache = { ...item };
   }
-
-  saveEdit(): void {
-    this.itemService.updateItem(this.editCache.id,this.editCache).subscribe((response: any) => {
-      if(response){
-      const index = this.items.findIndex(item => item.id === response.id);
-      this.items[index] = response;
-      }
-      this.getItems();
-      this.cancelEdit();
-     
-    },error=>{
-      console.log(error);
-      this.editRowId=null;
-    });
-  }
-
-  cancelEdit(): void {
-    this.editRowId = null;
-  }
-
-  cancelAdd(): void {
-    this.showAddRow = false;
-
-    this. resetNewItem();
-  }
-  resetNewItem() {
-    this.newItem = {
-      id: 0,
-      deleted: false,
-      type: '',
-      by: '',
-      time: Date.now(),
-      text: '',
-      dead: false,
-      parent: '',
-      poll: 0,
-      kids: [],
-      parts: [],
-      url: '',
-      score: 0,
-      title: '',
-      descendants: 0,
-      kidsString: '',
-      partsString: ''
-    };
-    
-  }
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
