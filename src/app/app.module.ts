@@ -20,11 +20,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemsComponent
+    ItemsComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class ItemsComponent implements OnInit,AfterViewInit {
   editCache: any = {};
   showAddRow: boolean = false;
   isLoading: boolean = false;
-  itemDisplayedColumns: string[] = [ 'title', 'type', 'text',  'score', 'poll', 'url'];
+  itemDisplayedColumns: string[] = [ 'title','url'];
 
   typeOptions: string[] = ['job', 'story', 'comment', 'poll', 'pollopt'];
 

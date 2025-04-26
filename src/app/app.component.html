@@ -1,15 +1,26 @@
+<!-- Top Toolbar -->
 <mat-toolbar color="primary" class="mat-header">
+  
+  <!-- Back Button on Extreme Left -->
+  <button mat-icon-button [routerLink]="['/']" class="back-button">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <!-- Spacer to center the title -->
   <span class="toolbar-title">📰 Hacker News Feed</span>
+
 </mat-toolbar>
-<div *ngIf="isLoading" class="overlay">
+
+<!-- Loader Overlay (on top of everything) -->
+<div *ngIf="isLoading" class="loader-overlay">
   <mat-progress-spinner
     mode="indeterminate"
-    diameter="60"
-    color="primary"
-  ></mat-progress-spinner>
+    diameter="50"
+    color="primary">
+  </mat-progress-spinner>
 </div>
 
-
-<div [class.blurred]="isLoading">
+<!-- Main Routed Content -->
+<div class="app-content" [class.dimmed]="isLoading">
   <router-outlet></router-outlet>
 </div>

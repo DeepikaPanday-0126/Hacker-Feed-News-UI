@@ -7,7 +7,7 @@ import { LoaderService } from './services/loader.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'HackerNewsApp';
+  title = 'Hacker News Feed';
   isLoading = false;
 
   constructor(private loaderService: LoaderService) {
