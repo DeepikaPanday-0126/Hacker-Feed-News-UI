@@ -11,18 +11,10 @@ export class ItemService {
   constructor(private http: HttpClient) {}
 
   
-  getLatestItem(): Observable<Item> {
-    return this.http.get<Item>(`${this.apiUrl}`);
-  }
-
-  getItemById(id: number): Observable<Item> {
-    return this.http.get<Item>(`${this.apiUrl}/${id}`);
-  }
+ 
   getTopStories(): Observable<Item[]> {
     return this.http.get<Item[]>(`${this.apiUrl}/top-stories`);
   }
-  getAskedStories(): Observable<Item[]> {
-    return this.http.get<Item[]>(`${this.apiUrl}/asked-stories`);
-  }
+ 
   
 }

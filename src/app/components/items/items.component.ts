@@ -14,10 +14,6 @@ import { ItemService } from 'src/app/services/item.service';
 export class ItemsComponent implements OnInit,AfterViewInit {
 
   items!: Item[];
-  
-  editRowId: number | null = null;
-  editCache: any = {};
-  showAddRow: boolean = false;
   isLoading: boolean = false;
   itemDisplayedColumns: string[] = [ 'title','url'];
 
@@ -36,41 +32,15 @@ export class ItemsComponent implements OnInit,AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  getItemById( id:number): void {
-    this.itemService.getItemById(id).subscribe(result => {
-      console.log(result);
-      this.items =[result];
-      this.dataSource.data = this.items;
-    });
-  }
+  
 
-  getLatestItem(): void {
-    this.itemService.getLatestItem().subscribe(result => {
-      console.log(result);
-      this.items =[result];
-      this.dataSource.data = this.items;
-    });
-  }
+
   getTopStories(): void {
     this.itemService.getTopStories().subscribe(result => {
       console.log(result);
       this.items =result;
       this.dataSource.data = this.items;
     });
-  }
-  getAskedStories(): void {
-    this.itemService.getAskedStories().subscribe(result => {
-      console.log(result);
-      this.items =result;
-      this.dataSource.data = this.items;
-    });
-  }
-  
- 
-
-  startEdit(item: Item): void {
-    this.editRowId = item.id;
-    this.editCache = { ...item };
   }
  
   applyFilter(event: Event) {
